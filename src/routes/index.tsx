@@ -4,6 +4,7 @@ import { Hero } from "@/components/landing/Hero";
 import { Benefits } from "@/components/landing/Benefits";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import { FAQ } from "@/components/landing/FAQ";
 import { ContactForm } from "@/components/landing/ContactForm";
 import { Footer } from "@/components/landing/Footer";
 
