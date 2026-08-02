@@ -39,6 +39,7 @@ function Index() {
         <Benefits />
         <Testimonials />
         <HowItWorks />
+        <FAQ />
         <ContactForm />
       </main>
       <Footer />
