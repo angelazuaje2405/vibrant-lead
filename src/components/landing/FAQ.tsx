@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 
-const faqs = [
+export const faqs = [
   {
     question: "¿Cuánto tarda implementar una solución de red o soporte TI?",
     answer:
