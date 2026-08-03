@@ -126,16 +126,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${import.meta.env.VITE_GA_ID || "G-XXXXXXXXXX"}', { send_page_view: true });
+          gtag('config', '${import.meta.env['VITE_GA_ID'] || "G-XXXXXXXXXX"}', { send_page_view: true });
         `,
       },
-      import.meta.env.VITE_GA_ID
-        ? {
-            src: `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_ID}`,
-            async: true,
-          }
-        : null,
-    ].filter(Boolean),
+      ...(import.meta.env['VITE_GA_ID']
+        ? [
+            {
+              src: `https://www.googletagmanager.com/gtag/js?id=${import.meta.env['VITE_GA_ID']}`,
+              async: true as const,
+            },
+          ]
+        : []),
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
