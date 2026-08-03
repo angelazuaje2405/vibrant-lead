@@ -5,10 +5,18 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 const CHALLENGE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 const MIN_FILL_TIME_MS = 3000; // bots submit instantly
 
+// Falls back to a per-process random key so a missing secret degrades the
+// challenge (tokens invalid after restart) instead of blanking the page.
+let fallbackSecret: string | null = null;
+
 function secret(): string {
   const value = process.env["CONTACT_CHALLENGE_SECRET"];
-  if (!value) throw new Error("CONTACT_CHALLENGE_SECRET is not configured");
-  return value;
+  if (value) return value;
+  if (!fallbackSecret) {
+    console.warn("[contact] CONTACT_CHALLENGE_SECRET missing; using ephemeral key");
+    fallbackSecret = randomBytes(32).toString("base64url");
+  }
+  return fallbackSecret;
 }
 
 function sign(payload: string): string {
