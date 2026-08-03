@@ -1,4 +1,4 @@
-import { ShieldCheck, Gauge, Headset, Network } from "lucide-react";
+import { Wifi, Gauge, Headset, Network } from "lucide-react";
 
 const items = [
   {
