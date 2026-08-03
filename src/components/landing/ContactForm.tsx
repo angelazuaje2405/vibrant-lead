@@ -33,7 +33,12 @@ export function ContactForm() {
   const [company, setCompany] = useState("");
   const [requirement, setRequirement] = useState("");
   const [challengeAnswer, setChallengeAnswer] = useState("");
-  const [challenge, setChallenge] = useState<{ question: string; token: string } | null>(null);
+  const [challenge, setChallenge] = useState<{
+    question: string;
+    token: string;
+    configured: boolean;
+  } | null>(null);
+  const [challengeError, setChallengeError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -44,8 +49,16 @@ export function ContactForm() {
       const next = await fetchChallenge();
       setChallenge(next);
       setChallengeAnswer("");
+      setChallengeError(
+        next.configured
+          ? null
+          : "La verificación humana está en modo temporal porque falta la clave CONTACT_CHALLENGE_SECRET en el servidor. Puedes enviar el formulario, pero avísanos si el envío falla.",
+      );
     } catch {
       setChallenge(null);
+      setChallengeError(
+        "No pudimos cargar la verificación humana. Recárgala con el botón de refrescar o escríbenos a info@akaconect.cl.",
+      );
     }
   }, [fetchChallenge]);
 
