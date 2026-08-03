@@ -18,8 +18,8 @@ const items = [
   },
   {
     icon: Headset,
-    title: "Soporte cercano",
-    text: "Un equipo real que responde rápido, en tu idioma y sin tecnicismos innecesarios.",
+    title: "Soporte técnico y manos remotas",
+    text: "Ingenieros en campo para implementaciones, soporte presencial y actividades de manos remotas FE, con respuesta ágil y acompañamiento real.",
   },
 ];
 
