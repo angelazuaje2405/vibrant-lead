@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import { CheckCircle2, ShieldCheck, Loader2, RefreshCw } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ShieldCheck, Loader2, RefreshCw } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
