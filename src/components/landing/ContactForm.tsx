@@ -148,7 +148,7 @@ export function ContactForm() {
 
                   <div>
                     <label htmlFor="fullName" className="mb-2 block text-sm font-medium">
-                      Nombre y apellido
+                      Nombre:
                     </label>
                     <input
                       id="fullName"
