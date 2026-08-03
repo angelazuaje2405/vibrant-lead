@@ -9,7 +9,7 @@ export function WhatsAppButton() {
       rel="noopener noreferrer nofollow"
       aria-label={`Chatear por WhatsApp con AKA Conect al ${WHATSAPP_NUMBER}`}
       title={`WhatsApp: ${WHATSAPP_NUMBER}`}
-      className="fixed right-4 bottom-4 z-50 grid h-14 w-14 place-items-center rounded-full shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] sm:right-6 sm:bottom-6"
+      className="fixed right-4 bottom-[calc(1.25rem+env(safe-area-inset-bottom))] z-50 grid h-12 w-12 place-items-center rounded-full shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] sm:right-6 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:h-14 sm:w-14"
       style={{ backgroundColor: "#25D366" }}
     >
       <svg
