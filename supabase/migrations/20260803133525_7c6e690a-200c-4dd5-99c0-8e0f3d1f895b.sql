@@ -1,0 +1,1 @@
+DELETE FROM public.contact_submissions WHERE email = 'prueba@example.com';
