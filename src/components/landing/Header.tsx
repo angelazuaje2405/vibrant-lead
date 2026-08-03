@@ -47,7 +47,7 @@ export function Header() {
           </ul>
           <a
             href="#contacto"
-            className="shrink-0 rounded-full bg-gradient-accent px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+            className="shrink-0 rounded-full bg-gradient-accent px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 sm:px-5 sm:py-2.5 sm:text-sm"
           >
             Cotizar ahora
           </a>
