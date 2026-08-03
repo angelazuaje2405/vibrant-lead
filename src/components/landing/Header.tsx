@@ -1,7 +1,7 @@
 import logo400 from "@/assets/logo-400w.webp.asset.json";
 import logo800 from "@/assets/logo-800w.webp.asset.json";
 import logo1200 from "@/assets/logo-1200w.webp.asset.json";
-import logoFallback from "@/assets/logo.png.asset.json";
+import logoFallback from "@/assets/logo-sin-fondo.png.asset.json";
 
 const links = [
   { href: "#beneficios", label: "Beneficios" },
