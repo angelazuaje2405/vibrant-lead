@@ -18,7 +18,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "AKA Conect"
+const SITE_NAME = "vibrant-lead"
 const ROOT_DOMAIN = "akaconect.cl"
 
 // Sample data for preview mode ONLY (not used in actual email sending).
