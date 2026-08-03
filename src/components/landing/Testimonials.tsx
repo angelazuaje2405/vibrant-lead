@@ -2,10 +2,10 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "María Fernanda Ruiz",
-    role: "Gerente de Operaciones, Distribuidora Andes",
-    initials: "MR",
-    text: "Migramos toda nuestra red con AKA Conect y las caídas desaparecieron. El soporte responde en minutos.",
+    name: "Carlos Pérez",
+    role: "Ingeniero Center para EDGEUNO",
+    initials: "CP",
+    text: "Son un excelente equipo de trabajo. Siempre disponibles y atentos a las actividades que realizamos dentro de los data center.",
   },
   {
     name: "Carlos Medina",
