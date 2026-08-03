@@ -9,7 +9,7 @@ import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
 
 // Configuration
-const SITE_NAME = "vibrant-lead"
+const SITE_NAME = "AKA Conect"
 const SENDER_DOMAIN = "cotizacion.akaconect.cl"
 const ROOT_DOMAIN = "akaconect.cl"
 const FROM_DOMAIN = "akaconect.cl"
