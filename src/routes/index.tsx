@@ -95,6 +95,7 @@ function Index() {
         <ContactForm />
       </main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
