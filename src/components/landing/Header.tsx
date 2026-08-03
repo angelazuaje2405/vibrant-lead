@@ -13,18 +13,18 @@ const links = [
 export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-6">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2.5 sm:gap-4 sm:px-6 sm:py-3">
         <a href="#top" className="flex min-w-0 items-center">
           <picture>
             <source
               srcSet={`${logo400.url} 400w, ${logo800.url} 800w, ${logo1200.url} 1200w`}
-              sizes="150px"
+              sizes="(max-width: 640px) 80px, 120px"
               type="image/webp"
             />
             <img
               src={logoFallback.url}
               alt="AKA Conect"
-              className="h-12 w-auto sm:h-16"
+              className="h-10 w-auto sm:h-14"
               width={220}
               height={148}
               loading="eager"
@@ -47,7 +47,7 @@ export function Header() {
           </ul>
           <a
             href="#contacto"
-            className="shrink-0 rounded-full bg-gradient-accent px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+            className="shrink-0 rounded-full bg-gradient-accent px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 sm:px-5 sm:py-2.5 sm:text-sm"
           >
             Cotizar ahora
           </a>
