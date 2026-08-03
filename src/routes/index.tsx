@@ -7,6 +7,7 @@ import { HowItWorks } from "@/components/landing/HowItWorks";
 import { FAQ, faqs } from "@/components/landing/FAQ";
 import { ContactForm } from "@/components/landing/ContactForm";
 import { Footer } from "@/components/landing/Footer";
+import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
 
 const pageTitle = "AKA Conect | Soluciones TI, redes y soporte para empresas";
 const pageDescription =
