@@ -18,13 +18,13 @@ export function Header() {
           <picture>
             <source
               srcSet={`${logo400.url} 400w, ${logo800.url} 800w, ${logo1200.url} 1200w`}
-              sizes="150px"
+              sizes="(max-width: 640px) 80px, 120px"
               type="image/webp"
             />
             <img
               src={logoFallback.url}
               alt="AKA Conect"
-              className="h-12 w-auto sm:h-16"
+              className="h-10 w-auto sm:h-14"
               width={220}
               height={148}
               loading="eager"
