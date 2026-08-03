@@ -17,8 +17,9 @@ export function Hero() {
             <span className="text-gradient-brand">impulsamos tu negocio</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-foreground/70 sm:text-lg">
-            Infraestructura, redes, soporte y desarrollo a la medida. En AKA Conect diseñamos
-            sistemas confiables que hacen que tu operación crezca sin fricciones ni caídas.
+            Infraestructura TI, redes, soluciones inalámbricas empresariales, servicio de manos
+            remotas FE y soporte presencial. En AKA Conect diseñamos sistemas confiables que hacen
+            que tu operación crezca sin fricciones ni caídas.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
