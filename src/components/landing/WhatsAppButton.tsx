@@ -1,5 +1,17 @@
 const WHATSAPP_URL = "https://wa.me/56983328318";
 const WHATSAPP_NUMBER = "+56 9 8332 8318";
+const WHATSAPP_CLICK_EVENT = "whatsapp_click";
+const LOCAL_STORAGE_KEY = "aka_whatsapp_clicks";
+
+declare global {
+  interface Window {
+    gtag?: (
+      command: "event",
+      action: string,
+      params?: Record<string, string | number | boolean | undefined>,
+    ) => void;
+  }
+}
 
 function isTrustedWhatsAppUrl(element: HTMLAnchorElement): boolean {
   try {
@@ -13,6 +25,36 @@ function isTrustedWhatsAppUrl(element: HTMLAnchorElement): boolean {
     );
   } catch {
     return false;
+  }
+}
+
+function trackWhatsAppClick(): void {
+  const payload = {
+    event_category: "conversion",
+    event_label: "WhatsApp flotante",
+    value: 1,
+    transport_type: "beacon",
+    number: WHATSAPP_NUMBER,
+  };
+
+  // Google Analytics 4 / gtag (static, no back-end)
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    try {
+      window.gtag("event", WHATSAPP_CLICK_EVENT, payload);
+    } catch {
+      // Ignore analytics errors so the user can still navigate.
+    }
+  }
+
+  // Static fallback: localStorage counter for environments without gtag.
+  if (typeof window !== "undefined" && window.localStorage) {
+    try {
+      const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+      const count = raw ? Number.parseInt(raw, 10) || 0 : 0;
+      window.localStorage.setItem(LOCAL_STORAGE_KEY, String(count + 1));
+    } catch {
+      // localStorage may be disabled in private mode.
+    }
   }
 }
 
@@ -35,10 +77,14 @@ export function WhatsAppButton() {
         title={`WhatsApp: ${WHATSAPP_NUMBER}`}
         className="relative grid h-12 w-12 place-items-center rounded-full shadow-[0_8px_24px_-6px_rgba(37,211,102,0.42)] transition-all duration-200 ease-out hover:scale-110 hover:shadow-[0_14px_34px_-6px_rgba(37,211,102,0.55)] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 sm:h-14 sm:w-14"
         style={{ backgroundColor: "#25D366" }}
+        data-track="whatsapp"
+        data-number={WHATSAPP_NUMBER}
         onClick={(e) => {
           if (!isTrustedWhatsAppUrl(e.currentTarget)) {
             e.preventDefault();
+            return;
           }
+          trackWhatsAppClick();
         }}
       >
         <svg
