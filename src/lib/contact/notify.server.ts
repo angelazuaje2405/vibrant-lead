@@ -3,7 +3,7 @@ import { sendLovableEmail, EmailAPIError } from "@lovable.dev/email-js";
 import { escapeHtml } from "./security.server";
 
 export const INBOX = "info@akaconect.cl";
-const SENDER_DOMAIN = "akaconect.cl";
+const SENDER_DOMAIN = "cotizacion.akaconect.cl";
 const FROM = `AKA Conect <no-reply@${SENDER_DOMAIN}>`;
 
 export interface ContactPayload {
