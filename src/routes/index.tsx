@@ -12,6 +12,7 @@ const pageTitle = "AKA Conect | Soluciones TI, redes y soporte para empresas";
 const pageDescription =
   "Conectamos tecnología, impulsamos tu negocio. Infraestructura, redes, seguridad y soporte técnico 24/7 para empresas que quieren crecer sin caídas.";
 const pageUrl = "/";
+const ogImageUrl = "https://akaconect.cl/og-image.png";
 
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -60,9 +61,16 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: pageUrl },
       { property: "og:locale", content: "es_ES" },
       { property: "og:site_name", content: "AKA Conect" },
+      { property: "og:image", content: ogImageUrl },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:alt", content: "AKA Conect - Soluciones TI, redes y soporte para empresas" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: pageTitle },
       { name: "twitter:description", content: pageDescription },
+      { name: "twitter:image", content: ogImageUrl },
+      { name: "twitter:image:alt", content: "AKA Conect - Soluciones TI, redes y soporte para empresas" },
     ],
     links: [{ rel: "canonical", href: pageUrl }],
     scripts: [
