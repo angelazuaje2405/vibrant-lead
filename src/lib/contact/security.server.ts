@@ -26,6 +26,12 @@ function sign(payload: string): string {
 export interface Challenge {
   question: string;
   token: string;
+  /** false when CONTACT_CHALLENGE_SECRET is missing (ephemeral key in use). */
+  configured: boolean;
+}
+
+export function isChallengeSecretConfigured(): boolean {
+  return Boolean(process.env["CONTACT_CHALLENGE_SECRET"]);
 }
 
 /** Builds a signed arithmetic challenge. The answer never travels to the browser. */
@@ -39,6 +45,7 @@ export function createChallenge(): Challenge {
   return {
     question: `¿Cuánto es ${a} + ${b}?`,
     token: `${issuedAt}.${nonce}.${sign(payload)}`,
+    configured: isChallengeSecretConfigured(),
   };
 }
 
