@@ -20,6 +20,10 @@ export default defineTool({
       .optional()
       .describe("Término o pregunta a buscar. Si se omite, devuelve todas las preguntas."),
   },
+  outputSchema: {
+    results: z.array(z.object({ question: z.string(), answer: z.string() })),
+    count: z.number(),
+  },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ query }) => {
     const term = query ? normalize(query.trim()) : "";
