@@ -234,8 +234,10 @@ export function ContactForm() {
                     </div>
                     <div className="mt-3 flex items-center gap-3">
                       <span className="text-sm text-ink-foreground/80">
-                        {challenge?.question ?? "Cargando verificación…"}
+                        {challenge?.question ??
+                          (challengeError ? "Verificación no disponible" : "Cargando verificación…")}
                       </span>
+
                       <input
                         id="challengeAnswer"
                         name="challengeAnswer"
