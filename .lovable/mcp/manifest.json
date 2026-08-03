@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "aka-conect",
+      "version": "0.1.0",
+      "title": "AKA Conect"
+    },
+    "tools": [
+      {
+        "name": "company_info",
+        "title": "Información de la empresa",
+        "description": "Devuelve la información pública de AKA Conect: nombre, eslogan, descripción, sitio web y página de contacto.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "company": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "company"
+          ]
+        }
+      },
+      {
+        "name": "list_services",
+        "title": "Listar servicios",
+        "description": "Lista los servicios y beneficios que AKA Conect ofrece (redes, seguridad, rendimiento y soporte).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "services": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "description"
+                ]
+              }
+            }
+          },
+          "required": [
+            "services"
+          ]
+        }
+      },
+      {
+        "name": "how_it_works",
+        "title": "Cómo funciona",
+        "description": "Devuelve el proceso de trabajo de AKA Conect paso a paso, desde el diagnóstico gratuito hasta el soporte continuo.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "step": {
+                    "type": "number"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "step",
+                  "title",
+                  "description"
+                ]
+              }
+            }
+          },
+          "required": [
+            "steps"
+          ]
+        }
+      },
+      {
+        "name": "search_faq",
+        "title": "Buscar en preguntas frecuentes",
+        "description": "Busca en las preguntas frecuentes públicas de AKA Conect (plazos, cobertura, soporte, migración, facturación y seguridad). Sin término de búsqueda devuelve todas.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "description": "Término o pregunta a buscar. Si se omite, devuelve todas las preguntas.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string"
+                  },
+                  "answer": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "question",
+                  "answer"
+                ]
+              }
+            },
+            "count": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "results",
+            "count"
+          ]
+        }
+      }
+    ]
+  }
+}
