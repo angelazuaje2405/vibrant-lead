@@ -257,7 +257,15 @@ export function ContactForm() {
                       >
                         <RefreshCw className="h-4 w-4" />
                       </button>
-                    </div>
+                    {challengeError && (
+                      <p role="status" className="mt-3 flex gap-2 text-xs text-cyan">
+                        <AlertTriangle className="mt-px h-4 w-4 shrink-0" />
+                        <span>{challengeError}</span>
+                      </p>
+                    )}
+                  </div>
+
+
                   </div>
 
                   {error && (
