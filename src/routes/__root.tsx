@@ -120,7 +120,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           sameAs: [],
         }),
       },
-    ],
+      {
+        // Static Google Analytics 4 loader (no back-end). Set VITE_GA_ID in your build env.
+        children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${import.meta.env.VITE_GA_ID || "G-XXXXXXXXXX"}', { send_page_view: true });
+        `,
+      },
+      import.meta.env.VITE_GA_ID
+        ? {
+            src: `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_ID}`,
+            async: true,
+          }
+        : null,
+    ].filter(Boolean),
   }),
   shellComponent: RootShell,
   component: RootComponent,
