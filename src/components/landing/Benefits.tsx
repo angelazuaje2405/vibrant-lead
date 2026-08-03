@@ -7,9 +7,9 @@ const items = [
     text: "Diseño e instalación de infraestructura de red estable, segura y escalable para tu operación diaria.",
   },
   {
-    icon: ShieldCheck,
-    title: "Seguridad primero",
-    text: "Protección de datos, respaldos automáticos y monitoreo continuo contra amenazas.",
+    icon: Wifi,
+    title: "Redes inalámbricas empresariales",
+    text: "Diseño e instalación de redes WiFi corporativas de alto rendimiento, cobertura estable y gestión centralizada.",
   },
   {
     icon: Gauge,
