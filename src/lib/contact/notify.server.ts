@@ -64,6 +64,7 @@ export async function sendContactNotification(payload: ContactPayload): Promise<
         html,
         text,
         idempotency_key: `contact-${payload.submissionId}`,
+        purpose: "transactional",
         label: "contact-form",
       },
       { apiKey },
