@@ -99,9 +99,15 @@ export function ContactForm() {
     e.preventDefault();
     if (loading) return;
 
+    setTouched({ fullName: true, email: true });
+
+    const nameError = validateFullName(fullName);
+    const emailError = validateEmail(email);
+    setFieldErrors({ fullName: nameError, email: emailError });
+
     const parsed = schema.safeParse({ fullName, email, company, requirement, challengeAnswer });
-    if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Revisa los datos del formulario");
+    if (!parsed.success || nameError || emailError) {
+      setError(parsed.success ? undefined : (parsed.error.issues[0]?.message ?? "Revisa los datos del formulario"));
       return;
     }
     if (!challenge) {
