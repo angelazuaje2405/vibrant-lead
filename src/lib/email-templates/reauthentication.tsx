@@ -10,22 +10,26 @@ import {
   Text,
 } from '@react-email/components'
 
+import { code, container, footer, h1, main, text } from './styles'
+
 interface ReauthenticationEmailProps {
   token: string
 }
 
-export const ReauthenticationEmail = ({ token }: ReauthenticationEmailProps) => (
-  <Html lang="en" dir="ltr">
+export const ReauthenticationEmail = ({
+  token,
+}: ReauthenticationEmailProps) => (
+  <Html lang="es" dir="ltr">
     <Head />
-    <Preview>Your verification code</Preview>
+    <Preview>Tu código de verificación</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Confirm reauthentication</Heading>
-        <Text style={text}>Use the code below to confirm your identity:</Text>
-        <Text style={codeStyle}>{token}</Text>
+        <Heading style={h1}>Confirma tu identidad</Heading>
+        <Text style={text}>Usa el siguiente código para continuar:</Text>
+        <Text style={code}>{token}</Text>
         <Text style={footer}>
-          This code will expire shortly. If you didn't request this, you can
-          safely ignore this email.
+          Este código expira en poco tiempo. Si no lo solicitaste, ignora este
+          mensaje.
         </Text>
       </Container>
     </Body>
@@ -33,26 +37,3 @@ export const ReauthenticationEmail = ({ token }: ReauthenticationEmailProps) => 
 )
 
 export default ReauthenticationEmail
-
-const main = { backgroundColor: '#ffffff', fontFamily: "'Space Grotesk', 'DM Sans', Arial, Helvetica, sans-serif" }
-const container = { padding: '32px 28px', maxWidth: '600px', margin: '0 auto' }
-const h1 = {
-  fontSize: '22px',
-  fontWeight: 'bold' as const,
-  color: '#0b1220',
-  margin: '0 0 20px',
-}
-const text = {
-  fontSize: '14px',
-  color: '#5b6779',
-  lineHeight: '1.5',
-  margin: '0 0 25px',
-}
-const codeStyle = {
-  fontFamily: 'Courier, monospace',
-  fontSize: '22px',
-  fontWeight: 'bold' as const,
-  color: '#0b1220',
-  margin: '0 0 30px',
-}
-const footer = { fontSize: '12px', color: '#8a93a3', margin: '30px 0 0' }

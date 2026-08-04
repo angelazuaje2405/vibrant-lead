@@ -11,6 +11,8 @@ import {
   Text,
 } from '@react-email/components'
 
+import { button, container, footer, h1, main, text } from './styles'
+
 interface MagicLinkEmailProps {
   siteName: string
   confirmationUrl: string
@@ -20,21 +22,21 @@ export const MagicLinkEmail = ({
   siteName,
   confirmationUrl,
 }: MagicLinkEmailProps) => (
-  <Html lang="en" dir="ltr">
+  <Html lang="es" dir="ltr">
     <Head />
-    <Preview>Your login link for {siteName}</Preview>
+    <Preview>Tu enlace de acceso a {siteName}</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Your login link</Heading>
+        <Heading style={h1}>Tu enlace de acceso</Heading>
         <Text style={text}>
-          Click the button below to log in to {siteName}. This link will expire
-          shortly.
+          Haz clic en el botón para ingresar a {siteName}. Este enlace expira en
+          poco tiempo.
         </Text>
         <Button style={button} href={confirmationUrl}>
-          Log In
+          Ingresar
         </Button>
         <Text style={footer}>
-          If you didn't request this link, you can safely ignore this email.
+          Si no solicitaste este enlace, puedes ignorar este mensaje.
         </Text>
       </Container>
     </Body>
@@ -42,27 +44,3 @@ export const MagicLinkEmail = ({
 )
 
 export default MagicLinkEmail
-
-const main = { backgroundColor: '#ffffff', fontFamily: "'Space Grotesk', 'DM Sans', Arial, Helvetica, sans-serif" }
-const container = { padding: '32px 28px', maxWidth: '600px', margin: '0 auto' }
-const h1 = {
-  fontSize: '22px',
-  fontWeight: 'bold' as const,
-  color: '#0b1220',
-  margin: '0 0 20px',
-}
-const text = {
-  fontSize: '14px',
-  color: '#5b6779',
-  lineHeight: '1.5',
-  margin: '0 0 25px',
-}
-const button = {
-  backgroundColor: '#2645e0',
-  color: '#ffffff',
-  fontSize: '14px',
-  borderRadius: '12px',
-  padding: '14px 24px', fontWeight: 'bold' as const,
-  textDecoration: 'none',
-}
-const footer = { fontSize: '12px', color: '#8a93a3', margin: '30px 0 0' }
