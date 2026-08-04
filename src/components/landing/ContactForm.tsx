@@ -155,6 +155,9 @@ export function ContactForm() {
     setEmail("");
     setCompany("");
     setRequirement("");
+    setFieldErrors({});
+    setTouched({});
+    setError(null);
     void loadChallenge();
   }
 
