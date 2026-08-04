@@ -79,6 +79,22 @@ export function ContactForm() {
     void loadChallenge();
   }, [loadChallenge]);
 
+  function validateFullName(value: string) {
+    const result = fullNameSchema.safeParse(value);
+    return result.success ? undefined : result.error.issues[0]?.message;
+  }
+
+  function validateEmail(value: string) {
+    const result = emailSchema.safeParse(value);
+    return result.success ? undefined : result.error.issues[0]?.message;
+  }
+
+  function updateFieldError(field: "fullName" | "email", value: string) {
+    const validator = field === "fullName" ? validateFullName : validateEmail;
+    const message = validator(value);
+    setFieldErrors((prev) => ({ ...prev, [field]: message }));
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (loading) return;
