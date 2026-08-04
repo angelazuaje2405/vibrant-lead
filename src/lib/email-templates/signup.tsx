@@ -12,6 +12,8 @@ import {
   Text,
 } from '@react-email/components'
 
+import { button, container, footer, h1, link, main, text } from './styles'
+
 interface SignupEmailProps {
   siteName: string
   siteUrl: string
@@ -25,31 +27,28 @@ export const SignupEmail = ({
   recipient,
   confirmationUrl,
 }: SignupEmailProps) => (
-  <Html lang="en" dir="ltr">
+  <Html lang="es" dir="ltr">
     <Head />
-    <Preview>Confirm your email for {siteName}</Preview>
+    <Preview>Confirma tu correo en {siteName}</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Confirm your email</Heading>
+        <Heading style={h1}>Confirma tu correo</Heading>
         <Text style={text}>
-          Thanks for signing up for{' '}
+          Gracias por registrarte en{' '}
           <Link href={siteUrl} style={link}>
             <strong>{siteName}</strong>
           </Link>
-          !
+          .
         </Text>
         <Text style={text}>
-          Please confirm your email address (
-          <Link href={`mailto:${recipient}`} style={link}>
-            {recipient}
-          </Link>
-          ) by clicking the button below:
+          Confirma tu dirección de correo ({recipient}) haciendo clic en el
+          botón:
         </Text>
         <Button style={button} href={confirmationUrl}>
-          Verify Email
+          Verificar correo
         </Button>
         <Text style={footer}>
-          If you didn't create an account, you can safely ignore this email.
+          Si no creaste esta cuenta, puedes ignorar este mensaje.
         </Text>
       </Container>
     </Body>
@@ -57,28 +56,3 @@ export const SignupEmail = ({
 )
 
 export default SignupEmail
-
-const main = { backgroundColor: '#ffffff', fontFamily: "'Space Grotesk', 'DM Sans', Arial, Helvetica, sans-serif" }
-const container = { padding: '32px 28px', maxWidth: '600px', margin: '0 auto' }
-const h1 = {
-  fontSize: '22px',
-  fontWeight: 'bold' as const,
-  color: '#0b1220',
-  margin: '0 0 20px',
-}
-const text = {
-  fontSize: '14px',
-  color: '#5b6779',
-  lineHeight: '1.5',
-  margin: '0 0 25px',
-}
-const link = { color: 'inherit', textDecoration: 'underline' }
-const button = {
-  backgroundColor: '#2645e0',
-  color: '#ffffff',
-  fontSize: '14px',
-  borderRadius: '12px',
-  padding: '14px 24px', fontWeight: 'bold' as const,
-  textDecoration: 'none',
-}
-const footer = { fontSize: '12px', color: '#8a93a3', margin: '30px 0 0' }
