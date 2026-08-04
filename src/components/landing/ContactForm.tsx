@@ -390,7 +390,7 @@ export function ContactForm() {
                       />
                       <span>
                         Acepto la{" "}
-                        <a href="/privacidad" className="font-semibold text-cyan underline underline-offset-2">
+                        <a href="#" className="font-semibold text-cyan underline underline-offset-2">
                           Política de Privacidad
                         </a>{" "}
                         y autorizo a AKA Conect a tratar mis datos (nombre, correo y empresa) con el
@@ -433,9 +433,9 @@ export function ContactForm() {
                     Solo texto: no se aceptan archivos adjuntos. Tus datos viajan cifrados, se
                     envían únicamente a info@akaconect.cl y no se comparten con terceros. Consulta
                     la{" "}
-                    <a href="/privacidad" className="underline underline-offset-2">Política de Privacidad</a>{" "}
+                    <a href="#" className="underline underline-offset-2">Política de Privacidad</a>{" "}
                     y los{" "}
-                    <a href="/terminos" className="underline underline-offset-2">Términos de Servicio</a>.
+                    <a href="#" className="underline underline-offset-2">Términos de Servicio</a>.
                   </p>
                 </form>
               </>
