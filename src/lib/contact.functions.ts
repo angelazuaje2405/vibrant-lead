@@ -124,7 +124,15 @@ export const submitContactRequest = createServerFn({ method: "POST" })
       return { ok: false as const, error: "No pudimos registrar tu solicitud. Inténtalo nuevamente.", refresh: true };
     }
 
-    const { sendContactNotification } = await import("./contact/notify.server");
+    const { sendContactNotification, sendContactConfirmation } = await import("./contact/notify.server");
+    const contactPayload = {
+      fullName,
+      email,
+      company: company || null,
+      requirement,
+      ip,
+      submissionId: row.id,
+    };
     const sent = await sendContactNotification({
       fullName,
       email,
