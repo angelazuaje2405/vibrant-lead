@@ -9,6 +9,8 @@ const submissionSchema = z.object({
   requirement: z.string().trim().min(10).max(2000),
   challengeToken: z.string().min(10).max(300),
   challengeAnswer: z.string().trim().max(4),
+  privacyConsent: z.boolean(),
+  marketingConsent: z.boolean().optional().default(false),
   // Honeypots: must stay empty. Real users never see these fields.
   website: z.string().max(200).optional().default(""),
   companyUrl: z.string().max(200).optional().default(""),
@@ -38,6 +40,10 @@ export const submitContactRequest = createServerFn({ method: "POST" })
       // Bot filled a hidden field: pretend success, send nothing.
       console.warn("[contact] honeypot triggered from", ip);
       return { ok: true as const };
+    }
+
+    if (!data.privacyConsent) {
+      return { ok: false as const, error: "Debes aceptar la Política de Privacidad para continuar." };
     }
 
     const answer = Number(data.challengeAnswer);
@@ -132,6 +138,8 @@ export const submitContactRequest = createServerFn({ method: "POST" })
       requirement,
       ip,
       submissionId: row.id,
+      privacyConsent: true,
+      marketingConsent: data.marketingConsent === true,
     };
     const sent = await sendContactNotification(contactPayload);
 
