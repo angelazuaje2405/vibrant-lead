@@ -138,6 +138,7 @@ export function ContactForm() {
           challengeToken: challenge.token,
           challengeAnswer,
           website: honeypot.current?.value ?? "",
+          companyUrl: honeypotUrl.current?.value ?? "",
         },
       });
 
