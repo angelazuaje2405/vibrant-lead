@@ -9,9 +9,11 @@ const submissionSchema = z.object({
   requirement: z.string().trim().min(10).max(2000),
   challengeToken: z.string().min(10).max(300),
   challengeAnswer: z.string().trim().max(4),
-  // Honeypot: must stay empty. Real users never see this field.
+  // Honeypots: must stay empty. Real users never see these fields.
   website: z.string().max(200).optional().default(""),
+  companyUrl: z.string().max(200).optional().default(""),
 });
+
 
 export const getContactChallenge = createServerFn({ method: "GET" }).handler(async () => {
   const { createChallenge } = await import("./contact/security.server");
