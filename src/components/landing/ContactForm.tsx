@@ -201,11 +201,21 @@ export function ContactForm() {
                   autoComplete="on"
                   className="mt-9 space-y-4 text-left"
                 >
-                  {/* Honeypot anti-bots: oculto para personas, invisible para lectores de pantalla */}
+                  {/* Honeypots anti-bots: ocultos para personas, invisibles para lectores de pantalla */}
                   <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="website">No completar</label>
                     <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" ref={honeypot} />
+                    <label htmlFor="companyUrl">No completar</label>
+                    <input
+                      id="companyUrl"
+                      name="companyUrl"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      ref={honeypotUrl}
+                    />
                   </div>
+
 
                   <div>
                     <label htmlFor="fullName" className="mb-2 block text-sm font-medium">
