@@ -212,10 +212,25 @@ export function ContactForm() {
                       value={fullName}
                       maxLength={100}
                       autoComplete="name"
-                      onChange={(e) => setFullName(e.target.value)}
+                      aria-invalid={touched.fullName ? !!fieldErrors.fullName : undefined}
+                      aria-describedby={fieldErrors.fullName ? "fullName-error" : undefined}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                        if (touched.fullName) updateFieldError("fullName", e.target.value);
+                      }}
+                      onBlur={() => {
+                        setTouched((prev) => ({ ...prev, fullName: true }));
+                        updateFieldError("fullName", fullName);
+                      }}
                       placeholder="Ej. María González"
-                      className={inputClass}
+                      className={`${inputClass} ${touched.fullName && fieldErrors.fullName ? inputErrorClass : ""}`}
                     />
+                    {touched.fullName && fieldErrors.fullName && (
+                      <p id="fullName-error" role="alert" className={errorTextClass}>
+                        <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                        {fieldErrors.fullName}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -229,10 +244,25 @@ export function ContactForm() {
                       value={email}
                       maxLength={254}
                       autoComplete="email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      aria-invalid={touched.email ? !!fieldErrors.email : undefined}
+                      aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (touched.email) updateFieldError("email", e.target.value);
+                      }}
+                      onBlur={() => {
+                        setTouched((prev) => ({ ...prev, email: true }));
+                        updateFieldError("email", email);
+                      }}
                       placeholder="tucorreo@empresa.com"
-                      className={inputClass}
+                      className={`${inputClass} ${touched.email && fieldErrors.email ? inputErrorClass : ""}`}
                     />
+                    {touched.email && fieldErrors.email && (
+                      <p id="email-error" role="alert" className={errorTextClass}>
+                        <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </div>
 
                   <div>
