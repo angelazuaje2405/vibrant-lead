@@ -124,15 +124,16 @@ export const submitContactRequest = createServerFn({ method: "POST" })
       return { ok: false as const, error: "No pudimos registrar tu solicitud. Inténtalo nuevamente.", refresh: true };
     }
 
-    const { sendContactNotification } = await import("./contact/notify.server");
-    const sent = await sendContactNotification({
+    const { sendContactNotification, sendContactConfirmation } = await import("./contact/notify.server");
+    const contactPayload = {
       fullName,
       email,
       company: company || null,
       requirement,
       ip,
       submissionId: row.id,
-    });
+    };
+    const sent = await sendContactNotification(contactPayload);
 
     if (sent) {
       await supabaseAdmin
@@ -140,6 +141,9 @@ export const submitContactRequest = createServerFn({ method: "POST" })
         .update({ email_sent: true })
         .eq("id", row.id);
     }
+
+    // Confirmation copy to the requester (never blocks the successful response).
+    await sendContactConfirmation(contactPayload).catch(() => false);
 
     return { ok: true as const };
   });
