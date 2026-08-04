@@ -28,12 +28,15 @@ export const submitContactRequest = createServerFn({ method: "POST" })
       sanitizeText,
       verifyChallenge,
       isRateLimited,
+      isEmailRateLimited,
+      detectSpam,
     } = await import("./contact/security.server");
 
     const ip = getRequestIP({ xForwardedFor: true }) ?? "unknown";
 
-    if (data.website.trim() !== "") {
-      // Bot filled the hidden field: pretend success, send nothing.
+    if (data.website.trim() !== "" || data.companyUrl.trim() !== "") {
+      // Bot filled a hidden field: pretend success, send nothing.
+      console.warn("[contact] honeypot triggered from", ip);
       return { ok: true as const };
     }
 
@@ -65,6 +68,42 @@ export const submitContactRequest = createServerFn({ method: "POST" })
     if (!/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email)) {
       return { ok: false as const, error: "Correo inválido.", refresh: true };
     }
+
+    if (isEmailRateLimited(email)) {
+      return {
+        ok: false as const,
+        error: "Ya recibimos varias solicitudes con este correo. Escríbenos a info@akaconect.cl.",
+      };
+    }
+
+    const spam = detectSpam({ fullName, email, company, requirement });
+    if (spam.spam) {
+      console.warn(`[contact] blocked as spam (${spam.reason}) from ${ip}`);
+      return {
+        ok: false as const,
+        error:
+          "No pudimos procesar tu mensaje. Evita enlaces o texto promocional, o escríbenos directo a info@akaconect.cl.",
+      };
+    }
+
+    // Duplicate guard: same email + same message within the last 24 hours.
+    const { supabaseAdmin: dedupeClient } = await import("@/integrations/supabase/client.server");
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data: duplicates } = await dedupeClient
+      .from("contact_submissions")
+      .select("id")
+      .eq("email", email)
+      .eq("requirement", requirement)
+      .gte("created_at", since)
+      .limit(1);
+
+    if (duplicates && duplicates.length > 0) {
+      return {
+        ok: false as const,
+        error: "Ya recibimos esta solicitud. Te responderemos a la brevedad.",
+      };
+    }
+
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row, error } = await supabaseAdmin
