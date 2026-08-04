@@ -56,6 +56,7 @@ export function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const honeypot = useRef<HTMLInputElement>(null);
+  const honeypotUrl = useRef<HTMLInputElement>(null);
 
   const loadChallenge = useCallback(async () => {
     try {
