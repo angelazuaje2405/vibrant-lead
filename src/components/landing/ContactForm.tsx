@@ -21,8 +21,16 @@ const schema = z.object({
   challengeAnswer: z.string().trim().min(1, "Responde la verificación humana"),
 });
 
+const fullNameSchema = schema.shape.fullName;
+const emailSchema = schema.shape.email;
+
 const inputClass =
   "w-full rounded-xl border border-ink-foreground/20 bg-ink-foreground/10 px-4 py-3 text-sm text-ink-foreground placeholder:text-ink-foreground/45 outline-none focus:border-cyan";
+
+const inputErrorClass =
+  "border-cyan focus:border-cyan";
+
+const errorTextClass = "mt-1.5 flex items-center gap-1.5 text-xs font-medium text-cyan";
 
 export function ContactForm() {
   const fetchChallenge = useServerFn(getContactChallenge);
