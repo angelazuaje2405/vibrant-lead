@@ -21,8 +21,16 @@ const schema = z.object({
   challengeAnswer: z.string().trim().min(1, "Responde la verificación humana"),
 });
 
+const fullNameSchema = schema.shape.fullName;
+const emailSchema = schema.shape.email;
+
 const inputClass =
   "w-full rounded-xl border border-ink-foreground/20 bg-ink-foreground/10 px-4 py-3 text-sm text-ink-foreground placeholder:text-ink-foreground/45 outline-none focus:border-cyan";
+
+const inputErrorClass =
+  "border-cyan focus:border-cyan";
+
+const errorTextClass = "mt-1.5 flex items-center gap-1.5 text-xs font-medium text-cyan";
 
 export function ContactForm() {
   const fetchChallenge = useServerFn(getContactChallenge);
@@ -39,6 +47,11 @@ export function ContactForm() {
     configured: boolean;
   } | null>(null);
   const [challengeError, setChallengeError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{
+    fullName?: string;
+    email?: string;
+  }>({});
+  const [touched, setTouched] = useState<{ fullName?: boolean; email?: boolean }>({});
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -66,13 +79,45 @@ export function ContactForm() {
     void loadChallenge();
   }, [loadChallenge]);
 
+  function validateFullName(value: string) {
+    const result = fullNameSchema.safeParse(value);
+    return result.success ? undefined : result.error.issues[0]?.message;
+  }
+
+  function validateEmail(value: string) {
+    const result = emailSchema.safeParse(value);
+    return result.success ? undefined : result.error.issues[0]?.message;
+  }
+
+  function updateFieldError(field: "fullName" | "email", value: string) {
+    const validator = field === "fullName" ? validateFullName : validateEmail;
+    const message = validator(value);
+    setFieldErrors((prev) => ({ ...prev, [field]: message }));
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (loading) return;
 
+    setTouched({ fullName: true, email: true });
+
+    const nameError = validateFullName(fullName);
+    const emailError = validateEmail(email);
+    setFieldErrors({
+      fullName: nameError ?? "",
+      email: emailError ?? "",
+    });
+
     const parsed = schema.safeParse({ fullName, email, company, requirement, challengeAnswer });
-    if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message ?? "Revisa los datos del formulario");
+    if (!parsed.success || nameError || emailError) {
+      // Field-level errors for name/email are already shown under each input.
+      // Only show the general alert for other validation failures.
+      const firstIssue = parsed.success ? null : parsed.error.issues[0];
+      const isNameOrEmailIssue =
+        firstIssue && (firstIssue.path[0] === "fullName" || firstIssue.path[0] === "email");
+      setError(
+        parsed.success || isNameOrEmailIssue ? null : (firstIssue?.message ?? "Revisa los datos del formulario"),
+      );
       return;
     }
     if (!challenge) {
@@ -115,6 +160,9 @@ export function ContactForm() {
     setEmail("");
     setCompany("");
     setRequirement("");
+    setFieldErrors({});
+    setTouched({});
+    setError(null);
     void loadChallenge();
   }
 
@@ -169,10 +217,25 @@ export function ContactForm() {
                       value={fullName}
                       maxLength={100}
                       autoComplete="name"
-                      onChange={(e) => setFullName(e.target.value)}
+                      aria-invalid={touched.fullName ? !!fieldErrors.fullName : undefined}
+                      aria-describedby={fieldErrors.fullName ? "fullName-error" : undefined}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                        if (touched.fullName) updateFieldError("fullName", e.target.value);
+                      }}
+                      onBlur={() => {
+                        setTouched((prev) => ({ ...prev, fullName: true }));
+                        updateFieldError("fullName", fullName);
+                      }}
                       placeholder="Ej. María González"
-                      className={inputClass}
+                      className={`${inputClass} ${touched.fullName && fieldErrors.fullName ? inputErrorClass : ""}`}
                     />
+                    {touched.fullName && fieldErrors.fullName && (
+                      <p id="fullName-error" role="alert" className={errorTextClass}>
+                        <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                        {fieldErrors.fullName}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -186,10 +249,25 @@ export function ContactForm() {
                       value={email}
                       maxLength={254}
                       autoComplete="email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      aria-invalid={touched.email ? !!fieldErrors.email : undefined}
+                      aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (touched.email) updateFieldError("email", e.target.value);
+                      }}
+                      onBlur={() => {
+                        setTouched((prev) => ({ ...prev, email: true }));
+                        updateFieldError("email", email);
+                      }}
                       placeholder="tucorreo@empresa.com"
-                      className={inputClass}
+                      className={`${inputClass} ${touched.email && fieldErrors.email ? inputErrorClass : ""}`}
                     />
+                    {touched.email && fieldErrors.email && (
+                      <p id="email-error" role="alert" className={errorTextClass}>
+                        <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </div>
 
                   <div>
