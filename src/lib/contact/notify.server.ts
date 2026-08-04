@@ -13,6 +13,8 @@ export interface ContactPayload {
   requirement: string;
   ip: string;
   submissionId: string;
+  privacyConsent?: boolean;
+  marketingConsent?: boolean;
 }
 
 export async function sendContactNotification(payload: ContactPayload): Promise<boolean> {
@@ -34,6 +36,8 @@ export async function sendContactNotification(payload: ContactPayload): Promise<
     "Requerimiento:",
     payload.requirement,
     "",
+    `Consentimiento de privacidad: ${payload.privacyConsent ? "Aceptado" : "No registrado"}`,
+    `Comunicaciones comerciales: ${payload.marketingConsent ? "Aceptadas" : "No aceptadas"}`,
     `IP de origen: ${payload.ip}`,
     `ID de solicitud: ${payload.submissionId}`,
   ].join("\n");
@@ -49,6 +53,7 @@ export async function sendContactNotification(payload: ContactPayload): Promise<
       <h2 style="font-size:16px;margin:20px 0 8px">Requerimiento</h2>
       <p style="white-space:pre-wrap;font-size:14px;line-height:1.6;margin:0">${escapeHtml(payload.requirement)}</p>
       <hr style="border:none;border-top:1px solid #e5e9f0;margin:24px 0" />
+      <p style="font-size:12px;color:#5b6779;margin:0 0 8px">Consentimiento de privacidad: <strong>${payload.privacyConsent ? "Aceptado" : "No registrado"}</strong><br/>Comunicaciones comerciales: <strong>${payload.marketingConsent ? "Aceptadas" : "No aceptadas"}</strong></p>
       <p style="font-size:12px;color:#5b6779;margin:0">IP de origen: ${escapeHtml(payload.ip)}<br/>ID de solicitud: ${escapeHtml(payload.submissionId)}</p>
     </div>
   </body></html>`;
@@ -100,7 +105,14 @@ export async function sendContactConfirmation(payload: ContactPayload): Promise<
     "Requerimiento:",
     payload.requirement,
     "",
+    "Consentimientos registrados:",
+    `- Política de Privacidad: ${payload.privacyConsent ? "Aceptada" : "No registrada"}`,
+    `- Comunicaciones comerciales: ${payload.marketingConsent ? "Aceptadas" : "No aceptadas"}`,
+    "",
     `ID de solicitud: ${payload.submissionId}`,
+    "",
+    "Tratamos tus datos solo para responder a esta solicitud y no los compartimos con terceros.",
+    "Puedes solicitar acceso, rectificación o eliminación escribiendo a info@akaconect.cl.",
     "",
     "AKA Conect — info@akaconect.cl",
   ].join("\n");
@@ -118,6 +130,9 @@ export async function sendContactConfirmation(payload: ContactPayload): Promise<
       <h2 style="font-size:16px;margin:20px 0 8px">Requerimiento</h2>
       <p style="white-space:pre-wrap;font-size:14px;line-height:1.6;margin:0">${escapeHtml(payload.requirement)}</p>
       <hr style="border:none;border-top:1px solid #e5e9f0;margin:24px 0" />
+      <h2 style="font-size:16px;margin:20px 0 8px">Consentimientos registrados</h2>
+      <p style="font-size:14px;line-height:1.6;margin:0 0 16px">Política de Privacidad: <strong>${payload.privacyConsent ? "Aceptada" : "No registrada"}</strong><br/>Comunicaciones comerciales: <strong>${payload.marketingConsent ? "Aceptadas" : "No aceptadas"}</strong></p>
+      <p style="font-size:12px;color:#5b6779;margin:0 0 8px">Tratamos tus datos únicamente para responder a esta solicitud y no los compartimos con terceros. Puedes solicitar acceso, rectificación o eliminación escribiendo a ${INBOX}.</p>
       <p style="font-size:12px;color:#5b6779;margin:0">ID de solicitud: ${escapeHtml(payload.submissionId)}<br/>Si necesitas agregar información, responde a este correo o escríbenos a ${INBOX}.</p>
     </div>
   </body></html>`;

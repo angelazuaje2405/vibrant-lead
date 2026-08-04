@@ -19,6 +19,9 @@ const schema = z.object({
     .min(10, "Cuéntanos brevemente tu requerimiento")
     .max(2000, "Máximo 2000 caracteres"),
   challengeAnswer: z.string().trim().min(1, "Responde la verificación humana"),
+  privacyConsent: z
+    .boolean()
+    .refine((v) => v, "Debes aceptar la Política de Privacidad para continuar"),
 });
 
 const fullNameSchema = schema.shape.fullName;
@@ -41,6 +44,8 @@ export function ContactForm() {
   const [company, setCompany] = useState("");
   const [requirement, setRequirement] = useState("");
   const [challengeAnswer, setChallengeAnswer] = useState("");
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [challenge, setChallenge] = useState<{
     question: string;
     token: string;
@@ -109,7 +114,14 @@ export function ContactForm() {
       email: emailError ?? "",
     });
 
-    const parsed = schema.safeParse({ fullName, email, company, requirement, challengeAnswer });
+    const parsed = schema.safeParse({
+      fullName,
+      email,
+      company,
+      requirement,
+      challengeAnswer,
+      privacyConsent,
+    });
     if (!parsed.success || nameError || emailError) {
       // Field-level errors for name/email are already shown under each input.
       // Only show the general alert for other validation failures.
@@ -137,6 +149,8 @@ export function ContactForm() {
           requirement,
           challengeToken: challenge.token,
           challengeAnswer,
+          privacyConsent,
+          marketingConsent,
           website: honeypot.current?.value ?? "",
           companyUrl: honeypotUrl.current?.value ?? "",
         },
@@ -162,6 +176,8 @@ export function ContactForm() {
     setEmail("");
     setCompany("");
     setRequirement("");
+    setPrivacyConsent(false);
+    setMarketingConsent(false);
     setFieldErrors({});
     setTouched({});
     setError(null);
@@ -362,6 +378,43 @@ export function ContactForm() {
                     ) : null}
                   </div>
 
+                  <div className="space-y-3 rounded-xl border border-ink-foreground/20 bg-ink-foreground/5 p-4 text-left">
+                    <label htmlFor="privacyConsent" className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-ink-foreground/80">
+                      <input
+                        id="privacyConsent"
+                        name="privacyConsent"
+                        type="checkbox"
+                        checked={privacyConsent}
+                        onChange={(e) => setPrivacyConsent(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 shrink-0 accent-cyan"
+                      />
+                      <span>
+                        Acepto la{" "}
+                        <a href="#" className="font-semibold text-cyan underline underline-offset-2">
+                          Política de Privacidad
+                        </a>{" "}
+                        y autorizo a AKA Conect a tratar mis datos (nombre, correo y empresa) con el
+                        único fin de responder a este requerimiento. Puedo solicitar su acceso,
+                        rectificación o eliminación escribiendo a info@akaconect.cl.{" "}
+                        <span className="text-cyan">*</span>
+                      </span>
+                    </label>
+                    <label htmlFor="marketingConsent" className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-ink-foreground/80">
+                      <input
+                        id="marketingConsent"
+                        name="marketingConsent"
+                        type="checkbox"
+                        checked={marketingConsent}
+                        onChange={(e) => setMarketingConsent(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 shrink-0 accent-cyan"
+                      />
+                      <span>
+                        (Opcional) Quiero recibir novedades y contenidos técnicos de AKA Conect.
+                        Puedo darme de baja en cualquier momento.
+                      </span>
+                    </label>
+                  </div>
+
                   {error && (
                     <p role="alert" className="text-sm font-medium text-cyan">
                       {error}
@@ -377,8 +430,12 @@ export function ContactForm() {
                     {loading ? "Enviando…" : "Enviar requerimiento"}
                   </button>
                   <p className="text-center text-xs text-ink-foreground/55">
-                    Solo texto: no se aceptan archivos adjuntos. Tus datos viajan cifrados y se
-                    envían únicamente a info@akaconect.cl.
+                    Solo texto: no se aceptan archivos adjuntos. Tus datos viajan cifrados, se
+                    envían únicamente a info@akaconect.cl y no se comparten con terceros. Consulta
+                    la{" "}
+                    <a href="#" className="underline underline-offset-2">Política de Privacidad</a>{" "}
+                    y los{" "}
+                    <a href="#" className="underline underline-offset-2">Términos de Servicio</a>.
                   </p>
                 </form>
               </>
