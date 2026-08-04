@@ -65,7 +65,7 @@ export function ContactForm() {
       setChallengeError(
         next.configured
           ? null
-          : "La verificación humana está en modo temporal porque falta la clave CONTACT_CHALLENGE_SECRET. Pasos para configurarla: 1) Abre la configuración de secretos del proyecto. 2) Crea la variable CONTACT_CHALLENGE_SECRET con un valor aleatorio de al menos 32 caracteres (puedes usar openssl rand -hex 32). 3) Guarda y reinicia el servidor. Para comprobar que ya está cargada, recarga esta página: este aviso desaparecerá y verás 'Verificación segura activada'.",
+          : "La verificación humana está funcionando en modo temporal porque falta CONTACT_CHALLENGE_SECRET.\n\nPasos para configurarla:\n1. Abre la configuración de secretos del proyecto.\n2. Crea la variable CONTACT_CHALLENGE_SECRET con un valor aleatorio de al menos 32 caracteres (ej. openssl rand -hex 32).\n3. Guarda el secreto y reinicia el servidor.\n\n¿Cómo saber que ya está cargada? Recarga esta página: este aviso desaparecerá y aquí verás el mensaje 'Verificación segura activada'.",
       );
     } catch {
       setChallenge(null);
