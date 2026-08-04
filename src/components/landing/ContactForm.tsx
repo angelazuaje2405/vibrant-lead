@@ -103,11 +103,16 @@ export function ContactForm() {
 
     const nameError = validateFullName(fullName);
     const emailError = validateEmail(email);
-    setFieldErrors({ fullName: nameError, email: emailError });
+    setFieldErrors({
+      fullName: nameError ?? "",
+      email: emailError ?? "",
+    });
 
     const parsed = schema.safeParse({ fullName, email, company, requirement, challengeAnswer });
     if (!parsed.success || nameError || emailError) {
-      setError(parsed.success ? undefined : (parsed.error.issues[0]?.message ?? "Revisa los datos del formulario"));
+      setError(
+        parsed.success ? null : (parsed.error.issues[0]?.message ?? "Revisa los datos del formulario"),
+      );
       return;
     }
     if (!challenge) {
