@@ -336,10 +336,10 @@ export function ContactForm() {
                         <RefreshCw className="h-4 w-4" />
                       </button>
                     {challengeError && (
-                      <p role="status" className="mt-3 flex gap-2 text-xs text-cyan">
+                      <div role="status" className="mt-3 flex gap-2 rounded-lg border border-cyan/30 bg-cyan/10 p-3 text-xs text-cyan">
                         <AlertTriangle className="mt-px h-4 w-4 shrink-0" />
-                        <span>{challengeError}</span>
-                      </p>
+                        <span className="whitespace-pre-line">{challengeError}</span>
+                      </div>
                     )}
                   </div>
 
