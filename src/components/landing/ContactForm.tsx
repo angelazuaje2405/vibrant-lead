@@ -65,7 +65,7 @@ export function ContactForm() {
       setChallengeError(
         next.configured
           ? null
-          : "La verificación humana está en modo temporal porque falta la clave CONTACT_CHALLENGE_SECRET en el servidor. Puedes enviar el formulario, pero avísanos si el envío falla.",
+          : "La verificación humana está funcionando en modo temporal porque falta CONTACT_CHALLENGE_SECRET.\n\nPasos para configurarla:\n1. Abre la configuración de secretos del proyecto.\n2. Crea la variable CONTACT_CHALLENGE_SECRET con un valor aleatorio de al menos 32 caracteres (ej. openssl rand -hex 32).\n3. Guarda el secreto y reinicia el servidor.\n\n¿Cómo saber que ya está cargada? Recarga esta página: este aviso desaparecerá y aquí verás el mensaje 'Verificación segura activada'.",
       );
     } catch {
       setChallenge(null);
@@ -335,15 +335,19 @@ export function ContactForm() {
                       >
                         <RefreshCw className="h-4 w-4" />
                       </button>
-                    {challengeError && (
-                      <p role="status" className="mt-3 flex gap-2 text-xs text-cyan">
+                    </div>
+
+                    {challengeError ? (
+                      <div role="status" className="mt-3 flex gap-2 rounded-lg border border-cyan/30 bg-cyan/10 p-3 text-xs text-cyan">
                         <AlertTriangle className="mt-px h-4 w-4 shrink-0" />
-                        <span>{challengeError}</span>
-                      </p>
-                    )}
-                  </div>
-
-
+                        <span className="whitespace-pre-line">{challengeError}</span>
+                      </div>
+                    ) : challenge?.configured ? (
+                      <div role="status" className="mt-3 flex items-center gap-2 text-xs text-emerald-400">
+                        <CheckCircle2 className="h-4 w-4 shrink-0" />
+                        <span>Verificación segura activada</span>
+                      </div>
+                    ) : null}
                   </div>
 
                   {error && (
