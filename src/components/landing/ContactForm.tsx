@@ -110,8 +110,13 @@ export function ContactForm() {
 
     const parsed = schema.safeParse({ fullName, email, company, requirement, challengeAnswer });
     if (!parsed.success || nameError || emailError) {
+      // Field-level errors for name/email are already shown under each input.
+      // Only show the general alert for other validation failures.
+      const firstIssue = parsed.success ? null : parsed.error.issues[0];
+      const isNameOrEmailIssue =
+        firstIssue && (firstIssue.path[0] === "fullName" || firstIssue.path[0] === "email");
       setError(
-        parsed.success ? null : (parsed.error.issues[0]?.message ?? "Revisa los datos del formulario"),
+        parsed.success || isNameOrEmailIssue ? null : (firstIssue?.message ?? "Revisa los datos del formulario"),
       );
       return;
     }
