@@ -47,6 +47,11 @@ export function ContactForm() {
     configured: boolean;
   } | null>(null);
   const [challengeError, setChallengeError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{
+    fullName?: string;
+    email?: string;
+  }>({});
+  const [touched, setTouched] = useState<{ fullName?: boolean; email?: boolean }>({});
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
