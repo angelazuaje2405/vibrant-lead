@@ -335,12 +335,17 @@ export function ContactForm() {
                       >
                         <RefreshCw className="h-4 w-4" />
                       </button>
-                    {challengeError && (
+                    {challengeError ? (
                       <div role="status" className="mt-3 flex gap-2 rounded-lg border border-cyan/30 bg-cyan/10 p-3 text-xs text-cyan">
                         <AlertTriangle className="mt-px h-4 w-4 shrink-0" />
                         <span className="whitespace-pre-line">{challengeError}</span>
                       </div>
-                    )}
+                    ) : challenge?.configured ? (
+                      <div role="status" className="mt-3 flex items-center gap-2 text-xs text-emerald-400">
+                        <CheckCircle2 className="h-4 w-4 shrink-0" />
+                        <span>Verificación segura activada</span>
+                      </div>
+                    ) : null}
                   </div>
 
 
